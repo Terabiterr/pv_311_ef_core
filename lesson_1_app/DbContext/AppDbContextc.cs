@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using lesson_1_app.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 namespace lesson_1_app
 {
@@ -16,7 +17,8 @@ namespace lesson_1_app
         {
             var connectionString = _configuration.GetConnectionString("DefaultConnection");
             optionsBuilder.UseSqlServer(connectionString);
-
+            base.OnConfiguring(optionsBuilder);
         }
+        public DbSet<Product> Products { get; set; }
     }
 }
