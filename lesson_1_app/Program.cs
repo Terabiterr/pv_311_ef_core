@@ -1,7 +1,9 @@
 ﻿
 
+using lesson_1_app.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace lesson_1_app
 {
@@ -15,7 +17,16 @@ namespace lesson_1_app
             string connectionString = config.GetConnectionString("DefaultConnection");
             var optionsBuildaer = new DbContextOptionsBuilder<AppDbContext>();
             optionsBuildaer.UseSqlServer(connectionString);
-
+            using (var context = new AppDbContext(optionsBuildaer.Options, config))
+            {
+                var product = new Product
+                {
+                    Name = "New Product",
+                    Price = 10.00m
+                };
+                context.Products.Add(product);
+                context.SaveChanges();
+            }
             using (var context = new AppDbContext(optionsBuildaer.Options, config))
             {
                 var products = context.Products.ToList();
