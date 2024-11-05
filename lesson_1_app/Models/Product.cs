@@ -14,5 +14,9 @@ namespace lesson_1_app.Models
         [Required]
         [Range(typeof(decimal), "0.0", "100000.00")]
         public decimal Price { get; set; }
+        public override string ToString()
+        {
+            return $"Id: {Id}, Name: {Name}, Price: {Price}";
+        }
     }
 }
